@@ -1,0 +1,12 @@
+{
+  "input": "/input",
+  "output": "/output",
+  "steps": [
+    {
+      "name": "Load CSV",
+      "module": "nodes.io",
+      "class": "ImageLoader",
+      "parameters": {}
+    }
+  ]
+}
