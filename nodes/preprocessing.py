@@ -2,6 +2,34 @@ import cv2
 import numpy as np 
 from .common import Node 
 
+
+class ImageNormalization(Node):
+    """
+    A node that applies linear contrast enhancement to a grayscale image.
+    
+    Parameters
+    ----------
+    alpha : float, optional
+        The scaling factor for the contrast enhancement. Values greater than 1.0
+        increase the contrast of the image, while values less than 1.0 decrease
+        the contrast. The default value is 1.0.
+    beta : float, optional
+        The shift factor for the contrast enhancement. This value is added to
+        all pixel intensities in the image. Positive values increase the
+        brightness of the image, while negative values decrease the brightness.
+        The default value is 0.0.
+    """
+
+    def __init__(self):
+        pass
+        
+    def process(self, image):
+        # Normalize image
+        image.image = cv2.normalize(image.image, None, 0, 255, cv2.NORM_MINMAX)
+        
+        return image        
+    
+
 class LinearContrast(Node):
     """
     A node that applies linear contrast enhancement to a grayscale image.
@@ -25,14 +53,12 @@ class LinearContrast(Node):
         
     def process(self, image):
 
-        print('=== LINEAR CONTRAST NODE ===')
-        print(type(image))
-        print(image)
-
         # Apply contrast adjustment
         image.image = np.clip(self.alpha * image.image + self.beta, 0, 255).astype(np.uint8)
         
         return image
+
+
 
 
 class CLAHEContrast(Node):
